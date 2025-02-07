@@ -111,7 +111,7 @@
             </div>
             <div class="d-flex justify-content-center search-buttons mt-4">
                 <button type="submit" class="btn me-2">Quick Short</button>
-                <button type="submit" class="btn">Shorten File</button>
+                <button disabled type="submit" class="btn">Shorten File</button>
             </div>
         </form>
 
