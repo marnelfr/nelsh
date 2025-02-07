@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use Illuminate\Http\Request;
 
 class RedirectController extends Controller
 {
 
     public function index($slug) {
-        $redirections = [
-            'rSD34gk' => 'https://latuilerie.com',
-            'mZE4GnH' => 'https://youtube.com',
-            'sZCBrYY' => 'https://google.com'
-        ];
-
         $redirectLink = '/';
+        $link = Link::where('code', $slug)->first();
 
-        if(isset($redirections[$slug])) {
-            $redirectLink = $redirections[$slug];
+        if($link) {
+            $redirectLink = $link->url;
         }
 
         return redirect($redirectLink);

@@ -75,120 +75,127 @@
         .main-content-up {
             transform: translateY(-3.5rem);
         }
-        {{--
-                /* Container for the table: spacing, width, and fade effect */
-                .fade-table {
-                    margin-top: 3rem;
-                    width: 90%;          /* Makes the container wider */
-                    max-width: 1200px;    /* Optional: limits the maximum width on large screens */
-                    margin-left: auto;
-                    margin-right: auto;
-                    background: transparent;
-                    /* Fade from opaque at the top to transparent at the bottom /
-                    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-                    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-                }
-
-                /* Ensure the table fills the container and is transparent */
-                .fade-table table {
-                    width: 60%;
-                    background-color: transparent;
-                }*/
-        --}}
-            </style>
-        </head>
-        <body class="d-flex flex-column vh-100">
-        <!-- Header: Top Navigation -->
-        <header class="py-2">
-            <div class="container">
-                <div class="d-flex justify-content-end">
-                    <a href="#" class="me-3 text-decoration-none">Login</a>
-{{--                    <a href="#" class="me-3 text-decoration-none">Signup</a>--}}
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content: Centered in available space -->
-        <main class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center main-content-up">
-            <!-- Google Logo -->
-            {{--<img
-                class="google-logo mb-4"
-                src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
-                alt="Google Logo"
-            />--}}
-            <h1 class="nelsh-logo mb-4">
-                NelSh<img class="nel-logo" src="https://avatars.githubusercontent.com/u/25979352?v=4" alt="Nel Logo">
-            </h1>
-            <!-- Search Form -->
-            <form class="w-100">
-                <div class="input-group search-box mx-auto">
-                    <input
-                        type="text"
-                        class="form-control border-end-0 rounded-start bg-dark text-light"
-                        placeholder=""
-                        aria-label="Search"
-                    />
-                    <span class="input-group-text bg-dark border-start-0 rounded-end">
-                  <!-- Optionally, you can add an icon here -->
-                </span>
-                </div>
-                <div class="d-flex justify-content-center search-buttons mt-4">
-                    <button type="submit" class="btn me-2">Quick Short</button>
-                    <button type="submit" class="btn">Shorten File</button>
-                </div>
-            </form>
-
-            <!-- Fading Table of Links -->
-            {{--<div class="fade-table">
-                <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <td><a href="#">Link 1</a></td>
-                        <td><a href="#">Link 2</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Link 3</a></td>
-                        <td><a href="#">Link 4</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Link 5</a></td>
-                        <td><a href="#">Link 6</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Link 7</a></td>
-                        <td><a href="#">Link 8</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Link 9</a></td>
-                        <td><a href="#">Link 10</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>--}}
-</main>
-
-<!-- Footer -->
-<footer class="py-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="mb-0 small">
-                    Country: <a href="#" class="text-decoration-none">United States</a>
-                </p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="#" class="small text-decoration-none me-2">Advertising</a>
-                <a href="#" class="small text-decoration-none me-2">Business</a>
-                <a href="#" class="small text-decoration-none me-2">How Search Works</a>
-                <a href="#" class="small text-decoration-none me-2">Privacy</a>
-                <a href="#" class="small text-decoration-none me-2">Terms</a>
-                <a href="#" class="small text-decoration-none">Settings</a>
+    </style>
+</head>
+<body class="d-flex flex-column vh-100">
+    <!-- Header: Top Navigation -->
+    <header class="py-3">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ route('login') }}" class="ms-4 text-decoration-none">Login</a>
+                <a href="{{ route('register') }}" class="me-4 text-decoration-none">Signup</a>
             </div>
         </div>
-    </div>
-</footer>
+    </header>
 
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Main Content: Centered in available space -->
+    <main class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center main-content-up">
+        <h1 class="nelsh-logo mb-4">
+            NelSh<img class="nel-logo" src="https://avatars.githubusercontent.com/u/25979352?v=4" alt="Nel Logo">
+        </h1>
+        <!-- Search Form -->
+        <form action="{{ route('links.store') }}" method="POST" class="w-100">
+            @csrf
+            <div class="input-group search-box mx-auto">
+                <input
+                    type="text"
+                    class="form-control border-end-0 rounded-start bg-dark text-light"
+                    placeholder=""
+                    aria-label="Search"
+                    required
+                    name="url"
+                />
+                <span class="input-group-text bg-dark border-start-0 rounded-end">
+                    <!-- Optionally, you can add an icon here -->
+                </span>
+            </div>
+            <div class="d-flex justify-content-center search-buttons mt-4">
+                <button type="submit" class="btn me-2">Quick Short</button>
+                <button type="submit" class="btn">Shorten File</button>
+            </div>
+        </form>
+
+        @if(session('short_link'))
+            <div class="row">
+                <div class="col-12 text-center mt-5 alert alert-success">
+                    <p>
+                        <b>Here is your link</b> <br>
+                        👇 <br>
+                        <span id="new_short_link" style="cursor: pointer;" data-link="{{ session('short_link') }}">
+                            {{ session('short_link') }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        @endif
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0 small">
+                        Country: <a href="#" class="text-decoration-none">United States</a>
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="small text-decoration-none me-2">Advertising</a>
+                    <a href="#" class="small text-decoration-none me-2">Business</a>
+                    <a href="#" class="small text-decoration-none me-2">How Search Works</a>
+                    <a href="#" class="small text-decoration-none me-2">Privacy</a>
+                    <a href="#" class="small text-decoration-none me-2">Terms</a>
+                    <a href="#" class="small text-decoration-none">Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var shortLink = document.querySelector('#new_short_link');
+            if (shortLink) {
+                shortLink.addEventListener('click', function() {
+                    // Retrieve the project code from the data attribute.
+                    var link = this.getAttribute('data-link');
+                    try {
+                        copyToClipboard(link).then(function (){
+                            alert('Link copied to clipboard!');
+                        })
+                    } catch(error) {
+                        console.error('Error copying the link: ', error);
+                    }
+                });
+            }
+        });
+
+        async function copyToClipboard(textToCopy) {
+            // Navigator clipboard api needs a secure context (https)
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(textToCopy);
+            } else {
+                // Use the 'out of viewport hidden text area' trick
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+
+                // Move textarea out of the viewport so it's not visible
+                textArea.style.position = "absolute";
+                textArea.style.left = "-999999px";
+
+                document.body.prepend(textArea);
+                textArea.select();
+
+                try {
+                    document.execCommand('copy');
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    textArea.remove();
+                }
+            }
+        }
+    </script>
 </body>
 </html>
