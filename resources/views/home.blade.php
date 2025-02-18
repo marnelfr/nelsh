@@ -25,13 +25,15 @@
             background-color: #202124;
         }
 
-        .nelsh-logo {
+       /* .nelsh-logo {
             font-family: cursive;
-            font-size: 5.75rem; /* Approximately 92px if 1rem = 16px */
-            color: #46cbf0;  /* A blue tone similar to one of Google's colors */
+            font-size: 5.75rem; !* Approximately 92px if 1rem = 16px *!
+            color: #46cbf0;  !* A blue tone similar to one of Google's colors *!
+        }*/
+        .nelsh-logo-img {
+            max-width: 60%
         }
         .nel-logo {
-            width: 1rem;
             /*transform: translateY(-3rem);*/
             -webkit-animation: spinHorizontal 1s infinite linear;
             animation: spinHorizontal 0.8s infinite linear;
@@ -75,6 +77,54 @@
         .main-content-up {
             transform: translateY(-3.5rem);
         }
+        @media screen and (min-width: 1024px) {
+            .nel-logo {
+                width: 2%;
+                position: relative;
+                left: 14.2rem;
+                top: -4.2rem;
+            }
+        }
+        @media screen and (max-width: 1024px) {
+            .nel-logo {
+                width: 3%;
+                position: relative;
+                left: 14.14rem;
+                top: -4.4rem;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .nel-logo {
+                width: 3%;
+                position: relative;
+                left: 12.7rem;
+                top: -3.8rem;
+            }
+        }
+        @media screen and (max-width: 425px) {
+            .nel-logo {
+                width: 4%;
+                position: relative;
+                left: 7.35rem;
+                top: -2.35rem;
+            }
+        }
+        @media screen and (max-width: 375px) {
+            .nel-logo {
+                width: 4%;
+                position: relative;
+                left: 6.4rem;
+                top: -2.1rem;
+            }
+        }
+        @media screen and (max-width: 320px) {
+            .nel-logo {
+                width: 4%;
+                position: relative;
+                left: 5.5rem;
+                top: -1.8rem;
+            }
+        }
     </style>
 </head>
 <body class="d-flex flex-column vh-100">
@@ -90,11 +140,11 @@
 
         <!-- Main Content: Centered in available space -->
     <main class="container flex-grow-1 d-flex flex-column justify-content-center align-items-center main-content-up">
-        <h1 class="nelsh-logo mb-4">
-            NelSh<img class="nel-logo" src="https://avatars.githubusercontent.com/u/25979352?v=4" alt="Nel Logo">
-        </h1>
+        <img class="nelsh-logo-img" src="https://marnelfr.github.io/assets/images/nelsh_logo.webp" alt="NelSH Logo">
+        <img class="nel-logo" src="https://avatars.githubusercontent.com/u/25979352?v=4" alt="Nel Logo">
+
         <!-- Search Form -->
-        <form action="{{ route('links.store') }}" method="POST" class="w-100">
+        <form action="{{ route('links.store') }}" method="POST" class="w-100 mt-3">
             @csrf
             <div class="input-group search-box mx-auto">
                 <input
