@@ -34,7 +34,7 @@ class RedirectController extends Controller
 
         Redirect::create($data);
 
-        $redirectLink .= '?ip=' . $request->ip();
+//        $redirectLink .= '?ip=' . $request->ip();
 
         return redirect($redirectLink);
     }
