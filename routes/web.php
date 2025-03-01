@@ -20,7 +20,7 @@ Route::any('/{slug}', [RedirectController::class, 'index'])
     ->where('slug', '^(?i:[gloxweim]).*') // l-linkedin, x, w-wesg-github
 ;
 
-Route::resource('link', LinkController::class)->names([
+Route::resource('short_link', LinkController::class)->names([
     'store' => 'links.store'
 ]);
 
