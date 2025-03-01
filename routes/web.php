@@ -17,7 +17,7 @@ Route::middleware('web')->group(function () {
 
 
 Route::any('/{slug}', [RedirectController::class, 'index'])
-    ->where('slug', '^(?i:[goeim]).*')
+    ->where('slug', '^(?i:[gloxweim]).*') // l-linkedin, x, w-wesg-github
 ;
 
 Route::resource('link', LinkController::class)->names([
