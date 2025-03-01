@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Google - Dark Mode</title>
     <!-- Bootstrap CSS (Bootstrap 5.3) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -145,7 +146,6 @@
 
         <!-- Search Form -->
         <form action="{{ route('links.store') }}" method="POST" class="w-100 mt-3">
-            @csrf
             <div class="input-group search-box mx-auto">
                 <input
                     type="text"
@@ -160,24 +160,20 @@
                 </span>
             </div>
             <div class="d-flex justify-content-center search-buttons mt-4">
-                <button type="submit" class="btn me-2">Quick Short</button>
+                <button type="submit" id="btn-quick-short" class="btn me-2">Quick Short</button>
                 <button disabled type="submit" class="btn">Shorten File</button>
             </div>
         </form>
 
-        @if(session('short_link'))
-            <div class="row">
-                <div class="col-12 text-center mt-5 alert alert-success">
-                    <p>
-                        <b>Here is your link</b> <br>
-                        👇 <br>
-                        <span id="new_short_link" style="cursor: pointer;" data-link="{{ session('short_link') }}">
-                            {{ session('short_link') }}
-                        </span>
-                    </p>
-                </div>
+        <div class="row" id="short-link-card" style="display: none">
+            <div class="col-12 text-center mt-5 alert alert-success">
+                <p>
+                    <b>Here is your link</b> <br>
+                    👇 <br>
+                    <span id="new_short_link" style="cursor: pointer;" data-link=""></span>
+                </p>
             </div>
-        @endif
+        </div>
     </main>
 
     <!-- Footer -->
@@ -205,20 +201,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var shortLink = document.querySelector('#new_short_link');
-            if (shortLink) {
-                shortLink.addEventListener('click', function() {
-                    // Retrieve the project code from the data attribute.
-                    var link = this.getAttribute('data-link');
-                    try {
-                        copyToClipboard(link).then(function (){
-                            alert('Link copied to clipboard!');
-                        })
-                    } catch(error) {
-                        console.error('Error copying the link: ', error);
+            const shortLink = document.querySelector('#new_short_link');
+            const form = document.querySelector("form");
+            const submitButton = document.getElementById("btn-quick-short");
+
+            form.addEventListener("submit", async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get the input value
+                const urlInput = form.querySelector("input[name='url']");
+                if (!urlInput.value.trim()) {
+                    alert("Please enter a URL.");
+                    return;
+                }
+
+                // Disable the button and add a spinner
+                submitButton.disabled = true;
+                submitButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Shortening...`;
+
+                try {
+                    // Send an AJAX POST request using Fetch API
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content, // CSRF token
+                        },
+                        body: JSON.stringify({ url: urlInput.value.trim() }),
+                    });
+
+                    const result = await response.json();
+
+                    // Handle success
+                    if (response.ok) {
+                        document.querySelector('#short-link-card').removeAttribute('style')
+                        document.querySelector('#new_short_link').innerHTML = result.short_url
+                        document.querySelector('#new_short_link').setAttribute('data-link', result.short_url)
+
+                        if (shortLink) {
+                            shortLink.addEventListener('click', function() {
+                                // Retrieve the project code from the data attribute.
+                                var link = this.getAttribute('data-link');
+                                try {
+                                    copyToClipboard(link).then(function (){
+                                        alert('Link copied to clipboard!');
+                                    })
+                                } catch(error) {
+                                    console.error('Error copying the link: ', error);
+                                }
+                            });
+                        }
+                    } else {
+                        throw new Error(result.message || "Something went wrong.");
                     }
-                });
-            }
+                } catch (error) {
+                    alert("Error: " + error.message);
+                } finally {
+                    // Reset the button state
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = "Quick Short";
+                    urlInput.value = ''
+                    urlInput.select()
+                }
+            });
         });
 
         async function copyToClipboard(textToCopy) {

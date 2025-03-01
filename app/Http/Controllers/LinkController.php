@@ -30,6 +30,7 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
+        sleep(1);
         $data = $request->validate([
             'url' => 'required|url',
         ]);
@@ -48,7 +49,11 @@ class LinkController extends Controller
         $base = env('BASE_LINK', 'https://nel.sh/');
         $shortLink = $base . $link->code;
 
-        return redirect()->route('home')->with('short_link', $shortLink);
+        return response()->json([
+            'message' => 'Link shortened successfully!',
+            'short_url' => url($shortLink)
+        ]);
+//        return redirect()->route('home')->with('short_link', $shortLink);
     }
 
     /**
