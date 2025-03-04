@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Google - Dark Mode</title>
+    <title>NelAsh</title>
     <!-- Bootstrap CSS (Bootstrap 5.3) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://marnelfr.github.io/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://marnelfr.github.io/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://marnelfr.github.io/assets/favicon-16x16.png">
+    <meta name="description" content="Easily shorten long URLs into compact, shareable links with our powerful short link generator. Simplify your links for better sharing and tracking." />
+    <meta name="keywords" content="URL shortener, link shortener, short link generator, create short links, shorten URLs, URL compression, easy link sharing" />
 
     <style>
         /* Dark mode base colors */
